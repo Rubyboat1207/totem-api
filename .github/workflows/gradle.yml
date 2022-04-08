@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: build
-        run: ./gradlew build
+        run: gradlew build
 
       - name: capture build artifacts
         uses: actions/upload-artifact@v2
