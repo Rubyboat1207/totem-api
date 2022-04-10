@@ -12,13 +12,5 @@ public class Main implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        //misc registry
-        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
-            dispatcher.register(CommandManager.literal("activateTotem").executes(context -> {
-                ServerCommandSource source = (ServerCommandSource) context.getSource();
-                source.getPlayer().damage(DamageSource.GENERIC, 90000);
-                return 1;
-            }));
-        });
     }
 }
