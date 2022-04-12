@@ -5,9 +5,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class giveItem extends DeezNuts{
+public class GiveEffect extends DeezNuts{
     ItemStack item;
-    public giveItem(ItemStack item)
+    public GiveEffect(ItemStack item)
     {
         this.item = item;
     }

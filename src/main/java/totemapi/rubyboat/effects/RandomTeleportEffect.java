@@ -11,11 +11,11 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class RandomTeleport extends DeezNuts{
+public class RandomTeleportEffect extends DeezNuts{
 
     float Radius = 16;
 
-    public RandomTeleport(float Radius)
+    public RandomTeleportEffect(float Radius)
     {
         this.Radius = Radius;
     }
