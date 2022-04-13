@@ -1,4 +1,4 @@
-package totemapi.rubyboat.mixin;
+package totemlib.rubyboat.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import totemapi.rubyboat.TotemItem;
+import totemlib.rubyboat.TotemItem;
 
 @Mixin(net.minecraft.client.network.ClientPlayNetworkHandler.class)
 public class ClientPlayNetworkHandler {

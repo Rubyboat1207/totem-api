@@ -2,20 +2,20 @@
   "schemaVersion": 1,
   "id": "totem_api",
   "version": "${version}",
-  "name": "Totemapi",
+  "name": "Totemlib",
   "description": "",
   "authors": [],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/totemapi/icon.png",
+  "icon": "assets/totemlib/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "totemapi.rubyboat.Main"
+      "totemlib.rubyboat.Main"
     ]
   },
   "mixins": [
-    "totemcraft.mixins.json"
+    "totemlib.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.13.2",

@@ -1,4 +1,4 @@
-package totemapi.rubyboat.mixin;
+package totemlib.rubyboat.mixin;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import totemapi.rubyboat.TotemItem;
+import totemlib.rubyboat.TotemItem;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {

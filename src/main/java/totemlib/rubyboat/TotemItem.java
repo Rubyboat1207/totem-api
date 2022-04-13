@@ -1,4 +1,4 @@
-package totemapi.rubyboat;
+package totemlib.rubyboat;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import totemapi.rubyboat.effects.DeezNuts;
+import totemlib.rubyboat.effects.DeezNuts;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

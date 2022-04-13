@@ -1,4 +1,4 @@
-package totemapi.rubyboat.effects;
+package totemlib.rubyboat.effects;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
