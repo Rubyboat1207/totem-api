@@ -11,7 +11,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "totemapi.rubyboat.Main"
+      "totemlib.rubyboat.Main"
     ]
   },
   "mixins": [
