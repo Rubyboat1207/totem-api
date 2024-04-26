@@ -11,15 +11,15 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "totemapi.rubyboat.Main"
+      "totemlib.rubyboat.Main"
     ]
   },
   "mixins": [
-    "totemcraft.mixins.json"
+    "totemapi.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.13.2",
     "fabric": "*",
-    "minecraft": "1.18.x"
+    "minecraft": "1.19.x"
   }
 }

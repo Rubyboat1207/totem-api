@@ -1,4 +1,4 @@
-package totemapi.rubyboat.mixin;
+package totemlib.rubyboat.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import totemapi.rubyboat.TotemItem;
+import totemlib.rubyboat.TotemItem;
 
 @Mixin(net.minecraft.client.network.ClientPlayNetworkHandler.class)
 public class ClientPlayNetworkHandler {
@@ -36,7 +36,7 @@ public class ClientPlayNetworkHandler {
                 this.client.particleManager.addEmitter(entity, ParticleTypes.TOTEM_OF_UNDYING, 30);
                 this.world.playSound(entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ITEM_TOTEM_USE, entity.getSoundCategory(), 1.0F, 1.0F, false);
                 if (entity == this.client.player) {
-                    this.client.gameRenderer.showFloatingItem(getActiveCustomTotem(this.client.player));
+                    this.client.gameRenderer.showFloatingItem(TotemItem.getActiveCustomTotem(this.client.player));
                 }
             }else if(packet.getStatus() == 98)
             {
@@ -46,17 +46,5 @@ public class ClientPlayNetworkHandler {
 
     }
 
-    private static ItemStack getActiveCustomTotem(PlayerEntity player) {
-        Hand[] var1 = Hand.values();
-        int var2 = var1.length;
 
-        for (int var3 = 0; var3 < var2; ++var3) {
-            Hand hand = var1[var3];
-            ItemStack itemStack = player.getStackInHand(hand);
-            if (itemStack.getItem() instanceof TotemItem) {
-                return itemStack;
-            }
-        }
-        return null;
-    }
 }

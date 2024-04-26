@@ -1,8 +1,9 @@
-package totemapi.rubyboat;
+package totemlib.rubyboat;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -10,10 +11,11 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import totemapi.rubyboat.effects.DeezNuts;
+import totemlib.rubyboat.effects.DeezNuts;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -112,5 +114,22 @@ public class TotemItem extends Item {
             return nutz.onClick(context.getPlayer(), context.getWorld(), context.getBlockPos(), context.getStack());
         }
         return ActionResult.PASS;
+    }
+
+    public static ItemStack getActiveCustomTotem(PlayerEntity player) {
+        Hand[] var1 = Hand.values();
+        int var2 = var1.length;
+
+        for (int var3 = 0; var3 < var2; ++var3) {
+            Hand hand = var1[var3];
+            ItemStack itemStack = player.getStackInHand(hand);
+            if(itemStack == null) {
+                return null;
+            }
+            if (itemStack.getItem() instanceof TotemItem) {
+                return itemStack;
+            }
+        }
+        return null;
     }
 }
