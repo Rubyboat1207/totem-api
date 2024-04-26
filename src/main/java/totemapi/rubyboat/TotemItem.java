@@ -6,11 +6,12 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import totemapi.rubyboat.effects.DeezNuts;
 
@@ -31,7 +32,7 @@ public class TotemItem extends Item {
         this.effects = effects;
         this.healthRemaining = healthRemaining;
         this.nutz = nutz;
-        Registry.register(Registry.ITEM, identifier, this);
+        Registry.register(Registries.ITEM, identifier, this);
     }
 
     public TotemItem(Settings settings, Identifier identifier, ArrayList<StatusEffectInstance> effects, int healthRemaining, @Nullable DeezNuts nutz, boolean canUseInVoid) {
@@ -39,7 +40,7 @@ public class TotemItem extends Item {
         this.effects = effects;
         this.healthRemaining = healthRemaining;
         this.nutz = nutz;
-        Registry.register(Registry.ITEM, identifier, this);
+        Registry.register(Registries.ITEM, identifier, this);
         this.canUseInVoid = canUseInVoid;
     }
 

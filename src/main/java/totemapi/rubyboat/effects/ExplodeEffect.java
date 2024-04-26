@@ -14,7 +14,7 @@ public class ExplodeEffect extends DeezNuts{
 
     public void onDeath(LivingEntity user, World world, ItemStack stack) {
         user.setInvulnerable(true);
-        world.createExplosion(user, user.getX(), user.getY(), user.getZ(), power, Explosion.DestructionType.BREAK);
+        world.createExplosion(user, user.getX(), user.getY(), user.getZ(), power, World.ExplosionSourceType.MOB);
         user.setInvulnerable(false);
     }
 

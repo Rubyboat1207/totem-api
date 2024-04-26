@@ -27,7 +27,8 @@ public abstract class LivingEntityMixin {
 
     @Inject(at = @At("HEAD"), method = "tryUseTotem", cancellable = true)
     private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
-        if (source.isOutOfWorld()) {
+        var world = ((LivingEntity) ((Object) (this))).getWorld();
+        if (source == world.getDamageSources().outOfWorld()) {
             if(((LivingEntity)(Object)this).isPlayer()){
                 ItemStack itemStack = null;
                 Hand[] var4 = Hand.values();
@@ -55,7 +56,7 @@ public abstract class LivingEntityMixin {
                 {
                     TotemItem totem =  (TotemItem) itemStack.getItem();
                     totem.onUse(((LivingEntity) (Object) this), itemStack);
-                    ((LivingEntity) (Object) this).world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 100);
+                    world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 100);
                     cir.setReturnValue(true);
                 }
             }
@@ -82,12 +83,12 @@ public abstract class LivingEntityMixin {
                     this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
                     this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
                     this.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
-                    ((LivingEntity) (Object) this).world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 35);
+                    world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 35);
                 }
                 if (itemStack.getItem() instanceof TotemItem) {
                     TotemItem totem =  (TotemItem) itemStack.getItem();
                     totem.onUse(((LivingEntity) (Object) this), itemStack);
-                    ((LivingEntity) (Object) this).world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 100);
+                    world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 100);
                 }
             }
 
