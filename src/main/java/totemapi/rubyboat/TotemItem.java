@@ -1,6 +1,7 @@
-package totemlib.rubyboat;
+package totemapi.rubyboat;
 
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
+import net.minecraft.item.Item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,9 +16,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import totemlib.rubyboat.effects.DeezNuts;
+import totemapi.rubyboat.effects.DeezNuts;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class TotemItem extends Item {
     public static ArrayList<TotemItem> totems;
     public boolean canUseInVoid = false;
 
-    public TotemItem(Settings settings, Identifier identifier, ArrayList<StatusEffectInstance> effects, int healthRemaining, @Nullable DeezNuts nutz) {
+    public TotemItem(Settings settings, Identifier identifier, ArrayList<StatusEffectInstance> effects, int healthRemaining, DeezNuts nutz) {
         super(settings.maxCount(1));
         this.effects = effects;
         this.healthRemaining = healthRemaining;
@@ -37,7 +37,7 @@ public class TotemItem extends Item {
         Registry.register(Registries.ITEM, identifier, this);
     }
 
-    public TotemItem(Settings settings, Identifier identifier, ArrayList<StatusEffectInstance> effects, int healthRemaining, @Nullable DeezNuts nutz, boolean canUseInVoid) {
+    public TotemItem(Settings settings, Identifier identifier, ArrayList<StatusEffectInstance> effects, int healthRemaining, DeezNuts nutz, boolean canUseInVoid) {
         super(settings.maxCount(1));
         this.effects = effects;
         this.healthRemaining = healthRemaining;
@@ -47,12 +47,14 @@ public class TotemItem extends Item {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @org.jetbrains.annotations.Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         ArrayList<StatusEffectInstance> goodEffect = new ArrayList<>();
         ArrayList<StatusEffectInstance> badEffect = new ArrayList<>();
+
         for(StatusEffectInstance effect : effects)
         {
-            if(effect.getEffectType().isBeneficial())
+
+            if(effect.getEffectType().value().isBeneficial())
             {
                 goodEffect.add(effect);
             }else
@@ -65,15 +67,15 @@ public class TotemItem extends Item {
             tooltip.add(Text.of("§2Beneficial Effects:"));
             for(StatusEffectInstance effect : goodEffect)
             {
-                tooltip.add(Text.of("   §a" + effect.getEffectType().getName().getString() + " " + (effect.getAmplifier() + 1) +" (" + (effect.getDuration()/20) + "s)"));
+                tooltip.add(Text.of("   §a" + effect.getEffectType().value().getName().getString() + " " + (effect.getAmplifier() + 1) +" (" + (effect.getDuration()/20) + "s)"));
             }
         }
-        if(badEffect.size() > 0)
+        if(!badEffect.isEmpty())
         {
             tooltip.add(Text.of("§4Negative Effects:"));
             for(StatusEffectInstance effect : badEffect)
             {
-                tooltip.add(Text.of("   §c" + effect.getEffectType().getName().getString() + " (" + (effect.getDuration()/20) + "s) lvl " + (effect.getAmplifier() + 1)));
+                tooltip.add(Text.of("   §c" + effect.getEffectType().value().getName().getString() + " (" + (effect.getDuration()/20) + "s) lvl " + (effect.getAmplifier() + 1)));
             }
         }
         if(nutz != null)
@@ -85,7 +87,7 @@ public class TotemItem extends Item {
                 tooltip.add(Text.of("    §5" + str));
             }
         }
-        super.appendTooltip(stack, world, tooltip, context);
+        super.appendTooltip(stack, context, tooltip, type);
     }
 
     public void onUse(LivingEntity user, ItemStack stack)

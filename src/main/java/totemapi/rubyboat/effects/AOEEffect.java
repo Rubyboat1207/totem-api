@@ -1,4 +1,4 @@
-package totemlib.rubyboat.effects;
+package totemapi.rubyboat.effects;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -6,6 +6,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -29,17 +30,17 @@ public class AOEEffect extends DeezNuts{
         String toReturn = "";
         for(StatusEffectInstance effect : aoeEffect)
         {
-            toReturn += "AOE: " + effect.getEffectType().getName().getString() + " " + (effect.getAmplifier() + 1) + " (" + Math.floor((double) effect.getDuration() / 20) + ") /lb";
+            toReturn += "AOE: " + effect.getEffectType().value().getName().getString() + " " + (effect.getAmplifier() + 1) + " (" + Math.floor((double) effect.getDuration() / 20) + ") /lb";
         }
         return toReturn;
     }
 
     @Override
     public void onDeath(LivingEntity user, World world, ItemStack stack) {
-        BlockPos origin = user.getBlockPos();
-        BlockPos pos1 = origin;
+        Vec3d origin = user.getPos();
+        Vec3d pos1 = origin;
         pos1 = pos1.add(radius, radius, radius);
-        BlockPos pos2 = origin;
+        Vec3d pos2 = origin;
         pos2 = pos2.add(-radius, -radius, -radius);
         Box box = new Box(pos1, pos2);
         List<Entity> entityList = world.getOtherEntities(user, box);
