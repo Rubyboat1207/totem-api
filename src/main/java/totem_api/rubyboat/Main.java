@@ -1,4 +1,4 @@
-package totemapi.rubyboat;
+package totem_api.rubyboat;
 
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 import java.util.ArrayList;
 
 public class Main implements ModInitializer {
-    public static String MOD_ID = "totemapi";
+    public static String MOD_ID = "totem_api";
     @Override
     public void onInitialize() {
         new TotemItem(new Item.Settings(), new Identifier(MOD_ID, "test_totem"), new ArrayList<StatusEffectInstance>(), 10, null, true);

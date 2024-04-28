@@ -1,9 +1,8 @@
-package totemapi.rubyboat.effects;
+package totem_api.rubyboat.effects;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
 
 public class ExplodeEffect extends DeezNuts{
     public int power;

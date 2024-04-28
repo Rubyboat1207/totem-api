@@ -1,7 +1,6 @@
-package totemapi.rubyboat;
+package totem_api.rubyboat;
 
 import net.minecraft.client.item.TooltipType;
-import net.minecraft.item.Item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,8 +14,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-import totemapi.rubyboat.effects.DeezNuts;
+import totem_api.rubyboat.effects.DeezNuts;
 
 import java.util.ArrayList;
 import java.util.List;
