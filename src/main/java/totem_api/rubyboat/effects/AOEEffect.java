@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AOEEffect extends DeezNuts{
+public class AOEEffect extends TotemEffect {
     int radius = 5;
     ArrayList<StatusEffectInstance> aoeEffect = new ArrayList<>();
 

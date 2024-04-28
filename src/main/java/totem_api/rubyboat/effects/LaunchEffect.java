@@ -4,7 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class LaunchEffect extends DeezNuts{
+public class LaunchEffect extends TotemEffect {
     double velocity;
 
     public LaunchEffect(double velocity)

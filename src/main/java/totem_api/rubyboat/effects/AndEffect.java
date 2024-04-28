@@ -1,18 +1,37 @@
 package totem_api.rubyboat.effects;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import totem_api.rubyboat.components.TotemEffectType;
 
-public class AndEffect extends DeezNuts{
-    DeezNuts effect1;
-    DeezNuts effect2;
+public class AndEffect extends TotemEffect {
+    public static final MapCodec<AndEffect> CODEC = RecordCodecBuilder.mapCodec((instance) ->
+        instance.group(
+                TotemEffect.CODEC.fieldOf("first").forGetter(AndEffect::first),
+                TotemEffect.CODEC.fieldOf("second").forGetter(AndEffect::second)
+        ).apply(instance, AndEffect::new)
+    );
+
+    TotemEffect effect1;
+    TotemEffect effect2;
+
+    private TotemEffect first() {
+        return effect1;
+    }
+
+    private  TotemEffect second() {
+        return effect2;
+    }
 
 
-    public AndEffect(@NotNull DeezNuts effect1, @NotNull DeezNuts effect2)
+    public AndEffect(@NotNull TotemEffect effect1, @NotNull TotemEffect effect2)
     {
         this.effect1 = effect1;
         this.effect2 = effect2;
@@ -35,5 +54,10 @@ public class AndEffect extends DeezNuts{
     @Override
     public String getTooltip() {
         return effect1.getTooltip() + "/lb" + effect2.getTooltip();
+    }
+
+    @Override
+    public TotemEffectType getType() {
+        return null;
     }
 }

@@ -14,7 +14,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import totem_api.rubyboat.effects.DeezNuts;
+import totem_api.rubyboat.effects.TotemEffect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +23,11 @@ public class TotemItem extends Item {
 
     public ArrayList<StatusEffectInstance> effects;
     public int healthRemaining;
-    public DeezNuts nutz;
+    public TotemEffect nutz;
     public static ArrayList<TotemItem> totems;
     public boolean canUseInVoid = false;
 
-    public TotemItem(Settings settings, Identifier identifier, ArrayList<StatusEffectInstance> effects, int healthRemaining, DeezNuts nutz) {
+    public TotemItem(Settings settings, Identifier identifier, ArrayList<StatusEffectInstance> effects, int healthRemaining, TotemEffect nutz) {
         super(settings.maxCount(1));
         this.effects = effects;
         this.healthRemaining = healthRemaining;
@@ -35,7 +35,7 @@ public class TotemItem extends Item {
         Registry.register(Registries.ITEM, identifier, this);
     }
 
-    public TotemItem(Settings settings, Identifier identifier, ArrayList<StatusEffectInstance> effects, int healthRemaining, DeezNuts nutz, boolean canUseInVoid) {
+    public TotemItem(Settings settings, Identifier identifier, ArrayList<StatusEffectInstance> effects, int healthRemaining, TotemEffect nutz, boolean canUseInVoid) {
         super(settings.maxCount(1));
         this.effects = effects;
         this.healthRemaining = healthRemaining;

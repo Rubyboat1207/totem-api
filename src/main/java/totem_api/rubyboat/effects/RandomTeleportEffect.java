@@ -11,7 +11,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class RandomTeleportEffect extends DeezNuts{
+public class RandomTeleportEffect extends TotemEffect {
 
     float Radius = 16;
 
