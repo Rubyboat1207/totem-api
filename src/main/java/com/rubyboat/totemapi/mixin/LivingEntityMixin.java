@@ -105,13 +105,10 @@ public abstract class LivingEntityMixin {
                     world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 35);
                 }
                 if((itemStack.getItem() instanceof TotemItem)) {
-                    if(((TotemItem)itemStack.getItem()).canUseInVoid)
-                    {
-                        TotemItem totem =  (TotemItem) itemStack.getItem();
-                        totem.onUse(((LivingEntity) (Object) this), itemStack);
-                        world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 100);
-                        cir.setReturnValue(true);
-                    }
+                    TotemItem totem =  (TotemItem) itemStack.getItem();
+                    totem.onUse(((LivingEntity) (Object) this), itemStack);
+                    world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 100);
+                    cir.setReturnValue(true);
                 }else if(component != null) {
                     component.onUse(((LivingEntity) (Object) this), itemStack);
                     world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 100);
