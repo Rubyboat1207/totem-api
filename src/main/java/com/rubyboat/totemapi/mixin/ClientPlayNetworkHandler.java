@@ -1,4 +1,4 @@
-package totem_api.rubyboat.mixin;
+package com.rubyboat.totemapi.mixin;
 
 import com.rubyboat.totemapi.TotemItem;
 import net.minecraft.client.MinecraftClient;
