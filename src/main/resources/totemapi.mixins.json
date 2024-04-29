@@ -3,13 +3,12 @@
   "package": "com.rubyboat.totemapi.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ExampleMixin",
     "LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-    "ClientPlayNetworkHandler"
+    "ClientPlayNetworkHandlerMixin"
   ]
 }

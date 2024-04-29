@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(net.minecraft.client.network.ClientPlayNetworkHandler.class)
-public class ClientPlayNetworkHandler {
+public class ClientPlayNetworkHandlerMixin {
 
     @Shadow private ClientWorld world;
 
