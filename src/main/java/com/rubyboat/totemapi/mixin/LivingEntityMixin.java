@@ -30,93 +30,59 @@ public abstract class LivingEntityMixin {
 
     @Inject(at = @At("HEAD"), method = "tryUseTotem", cancellable = true)
     private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
-        var world = ((LivingEntity) ((Object) (this))).getWorld();
+        LivingEntity entity = (LivingEntity)(Object)this;
+        var world = entity.getWorld();
+        ItemStack itemStack = null;
+        TotemComponent component = null;
+
+        for (Hand hand : Hand.values()) {
+            ItemStack stack = getStackInHand(hand);
+            component = stack.get(TotemAPI.TOTEM_COMPONENT);
+            if (stack.isOf(Items.TOTEM_OF_UNDYING) || stack.getItem() instanceof TotemItem || component != null) {
+                itemStack = stack.copy();
+                stack.decrement(1);
+                break;
+            }
+        }
+
+        if (itemStack == null) {
+            cir.setReturnValue(false);
+            return;
+        }
+
+        boolean handled = false;
         if (source == world.getDamageSources().outOfWorld()) {
-            if(((LivingEntity)(Object)this).isPlayer()){
-                ItemStack itemStack = null;
-                Hand[] var4 = Hand.values();
-                int var5 = var4.length;
-                TotemComponent component = null;
-
-                for (int var6 = 0; var6 < var5; ++var6) {
-                    Hand hand = var4[var6];
-                    ItemStack itemStack2 = this.getStackInHand(hand);
-                    TotemComponent component2 = itemStack2.get(TotemAPI.TOTEM_COMPONENT);
-                    if (itemStack2.isOf(Items.TOTEM_OF_UNDYING) || itemStack2.getItem() instanceof TotemItem || component2 != null) {
-                        itemStack = itemStack2.copy();
-                        component = component2;
-                        itemStack2.decrement(1);
-                        break;
-                    }
+            if (entity.isPlayer()) {
+                if (component != null && component.worksInVoid()) {
+                    component.onUse(entity, itemStack);
+                    world.sendEntityStatus(entity, (byte) 100);
+                    handled = true;
+                } else if (itemStack.getItem() instanceof TotemItem && ((TotemItem)itemStack.getItem()).canUseInVoid) {
+                    ((TotemItem)itemStack.getItem()).onUse(entity, itemStack);
+                    world.sendEntityStatus(entity, (byte) 100);
+                    handled = true;
                 }
-
-                if(itemStack == null)
-                {
-                    cir.setReturnValue(false);
-                }
-                if(!(itemStack.getItem() instanceof TotemItem))
-                {
-                    cir.setReturnValue(false);
-                }
-                if(component == null) {
-                    if(((TotemItem)itemStack.getItem()).canUseInVoid)
-                    {
-                        TotemItem totem =  (TotemItem) itemStack.getItem();
-                        totem.onUse(((LivingEntity) (Object) this), itemStack);
-                        world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 100);
-                        cir.setReturnValue(true);
-                    }
-                }else {
-                    if(component.worksInVoid())
-                    {
-                        component.onUse(((LivingEntity) (Object) this), itemStack);
-                        world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 100);
-                        cir.setReturnValue(true);
-                    }
-                }
-
+            }
+        } else {
+            if (itemStack.isOf(Items.TOTEM_OF_UNDYING)) {
+                setHealth(1.0F);
+                clearStatusEffects();
+                addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
+                addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
+                addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
+                world.sendEntityStatus(entity, (byte) 35);
+                handled = true;
+            } else if (component != null) {
+                component.onUse(entity, itemStack);
+                world.sendEntityStatus(entity, (byte) 100);
+                handled = true;
+            } else if (itemStack.getItem() instanceof TotemItem) {
+                ((TotemItem)itemStack.getItem()).onUse(entity, itemStack);
+                world.sendEntityStatus(entity, (byte) 100);
+                handled = true;
             }
         }
-        else {
-            ItemStack itemStack = null;
-            Hand[] var4 = Hand.values();
-            int var5 = var4.length;
-            TotemComponent component = null;
 
-            for (int var6 = 0; var6 < var5; ++var6) {
-                Hand hand = var4[var6];
-                ItemStack itemStack2 = this.getStackInHand(hand);
-                TotemComponent component2 = itemStack2.get(TotemAPI.TOTEM_COMPONENT);
-                if (itemStack2.isOf(Items.TOTEM_OF_UNDYING) || itemStack2.getItem() instanceof TotemItem || component2 != null) {
-                    itemStack = itemStack2.copy();
-                    component = component2;
-                    itemStack2.decrement(1);
-                    break;
-                }
-            }
-            if (itemStack != null) {
-                if (itemStack.isOf(Items.TOTEM_OF_UNDYING)) {
-
-                    this.setHealth(1.0F);
-                    this.clearStatusEffects();
-                    this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
-                    this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
-                    this.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
-                    world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 35);
-                }
-                if((itemStack.getItem() instanceof TotemItem)) {
-                    TotemItem totem =  (TotemItem) itemStack.getItem();
-                    totem.onUse(((LivingEntity) (Object) this), itemStack);
-                    world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 100);
-                    cir.setReturnValue(true);
-                }else if(component != null) {
-                    component.onUse(((LivingEntity) (Object) this), itemStack);
-                    world.sendEntityStatus(((LivingEntity) (Object) this), (byte) 100);
-                    cir.setReturnValue(true);
-                }
-            }
-
-            cir.setReturnValue(itemStack != null);
-        }
+        cir.setReturnValue(handled);
     }
 }

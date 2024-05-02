@@ -21,7 +21,7 @@ public record TotemComponent(TotemEffect effect, boolean worksInVoid, int hearts
     public static Codec<TotemComponent> CODEC = RecordCodecBuilder.create(instance ->
         instance.group(
                 TotemEffect.CODEC.fieldOf("effect").forGetter(TotemComponent::effect),
-                Codec.BOOL.fieldOf("works_in_void").forGetter(TotemComponent::worksInVoid),
+                Codec.BOOL.fieldOf("works_in_void").orElse(false).forGetter(TotemComponent::worksInVoid),
                 Codec.INT.fieldOf("hearts_remaining").forGetter(TotemComponent::heartsRemaining)
         ).apply(instance, TotemComponent::new)
     );

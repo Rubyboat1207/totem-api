@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TotemItem extends Item {
-
     public ArrayList<StatusEffectInstance> effects;
     public int healthRemaining;
     public TotemEffect totemEffect;

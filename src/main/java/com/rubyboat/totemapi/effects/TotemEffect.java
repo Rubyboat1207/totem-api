@@ -35,7 +35,5 @@ public abstract class TotemEffect {
         return "";
     }
 
-    public TotemEffectType getType() {
-        return EFFECTS.get(new Identifier(TotemAPI.MOD_ID, "none"));
-    }
+    public abstract TotemEffectType getType();
 }

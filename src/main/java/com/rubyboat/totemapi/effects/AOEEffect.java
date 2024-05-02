@@ -3,6 +3,8 @@ package com.rubyboat.totemapi.effects;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.rubyboat.totemapi.TotemAPI;
+import com.rubyboat.totemapi.components.TotemEffectType;
 import com.rubyboat.totemapi.effects.TotemEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -22,7 +24,7 @@ public class AOEEffect extends TotemEffect {
                     StatusEffectInstance.CODEC.listOf().fieldOf("effects").forGetter(AOEEffect::getEffects)
             ).apply(instance, AOEEffect::new)
     );
-    int radius = 5;
+    int radius;
     ArrayList<StatusEffectInstance> aoeEffect = new ArrayList<>();
 
     private AOEEffect(Integer radius, List<StatusEffectInstance> statusEffectInstances) {
@@ -54,6 +56,11 @@ public class AOEEffect extends TotemEffect {
             toReturn += "AOE: " + effect.getEffectType().value().getName().getString() + " " + (effect.getAmplifier() + 1) + " (" + Math.floor((double) effect.getDuration() / 20) + ") /lb";
         }
         return toReturn;
+    }
+
+    @Override
+    public TotemEffectType getType() {
+        return TotemAPI.AOE_EFFECT_TYPE;
     }
 
     @Override

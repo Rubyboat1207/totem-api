@@ -1,6 +1,9 @@
 package com.rubyboat.totemapi.effects;
 
-import com.rubyboat.totemapi.effects.TotemEffect;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.rubyboat.totemapi.components.TotemEffectType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,12 +16,21 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class RandomTeleportEffect extends TotemEffect {
+    public static final MapCodec<RandomTeleportEffect> CODEC = RecordCodecBuilder.mapCodec(instance ->
+        instance.group(
+            Codec.FLOAT.fieldOf("radius").forGetter(RandomTeleportEffect::getRadius)
+        ).apply(instance, RandomTeleportEffect::new)
+    );
 
-    float Radius = 16;
+    private float getRadius() {
+        return radius;
+    }
 
-    public RandomTeleportEffect(float Radius)
+    private final float radius;
+
+    public RandomTeleportEffect(float radius)
     {
-        this.Radius = Radius;
+        this.radius = radius;
     }
 
     @Override
@@ -28,10 +40,10 @@ public class RandomTeleportEffect extends TotemEffect {
             double e = user.getY();
             double f = user.getZ();
 
-            for(int i = 0; i < Radius*2; ++i) {
-                double g = user.getX() + (user.getRandom().nextDouble() - 0.5D) * Radius*2;
-                double h = MathHelper.clamp(user.getY() + (double)(user.getRandom().nextInt((int) Radius * 2) - Radius / 2), (double)world.getBottomY(), (double)(world.getBottomY() + ((ServerWorld)world).getLogicalHeight() - 1));
-                double j = user.getZ() + (user.getRandom().nextDouble() - 0.5D) * Radius*2;
+            for(int i = 0; i < radius *2; ++i) {
+                double g = user.getX() + (user.getRandom().nextDouble() - 0.5D) * radius *2;
+                double h = MathHelper.clamp(user.getY() + (double)(user.getRandom().nextInt((int) radius * 2) - radius / 2), (double)world.getBottomY(), (double)(world.getBottomY() + ((ServerWorld)world).getLogicalHeight() - 1));
+                double j = user.getZ() + (user.getRandom().nextDouble() - 0.5D) * radius *2;
                 if (user.hasVehicle()) {
                     user.getVehicle().teleport(g, h, j);
                     SoundEvent soundEvent = user instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
@@ -52,6 +64,11 @@ public class RandomTeleportEffect extends TotemEffect {
 
     @Override
     public String getTooltip() {
-        return "Teleports you within a radius of " + Radius;
+        return "Teleports you within a radius of " + radius;
+    }
+
+    @Override
+    public TotemEffectType getType() {
+        return null;
     }
 }
