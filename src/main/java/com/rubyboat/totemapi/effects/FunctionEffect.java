@@ -68,7 +68,10 @@ public class FunctionEffect extends TotemEffect {
             return;
         }
 
-        CommandManager.callWithContext(source, context -> CommandExecutionContext.enqueueProcedureCall(context, commandFunction, source, ReturnValueConsumer.EMPTY));
+        CommandManager.callWithContext(source, context -> {
+
+            CommandExecutionContext.enqueueProcedureCall(context, commandFunction, source.withEntity(user).withPosition(user.getPos()), ReturnValueConsumer.EMPTY);
+        });
     }
 
     @Override

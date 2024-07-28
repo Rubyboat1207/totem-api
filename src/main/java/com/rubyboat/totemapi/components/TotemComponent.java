@@ -17,7 +17,7 @@ import net.minecraft.util.math.Vec3d;
 import java.util.ArrayList;
 
 public record TotemComponent(TotemEffect effect, boolean worksInVoid, int heartsRemaining) {
-    public static Registry<TotemEffectType> EFFECTS = new SimpleRegistry<>(RegistryKey.ofRegistry(new Identifier(TotemAPI.MOD_ID, "effects")), Lifecycle.stable(), false);
+    public static Registry<TotemEffectType> EFFECTS = new SimpleRegistry<>(RegistryKey.ofRegistry(TotemAPI.identifierOf( "effects")), Lifecycle.stable(), false);
     public static Codec<TotemComponent> CODEC = RecordCodecBuilder.create(instance ->
         instance.group(
                 TotemEffect.CODEC.fieldOf("effect").forGetter(TotemComponent::effect),

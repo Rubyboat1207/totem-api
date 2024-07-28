@@ -8,12 +8,15 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Set;
 
 public class RandomTeleportEffect extends TotemEffect {
     public static final MapCodec<RandomTeleportEffect> CODEC = RecordCodecBuilder.mapCodec(instance ->
@@ -45,7 +48,7 @@ public class RandomTeleportEffect extends TotemEffect {
                 double h = MathHelper.clamp(user.getY() + (double)(user.getRandom().nextInt((int) radius * 2) - radius / 2), (double)world.getBottomY(), (double)(world.getBottomY() + ((ServerWorld)world).getLogicalHeight() - 1));
                 double j = user.getZ() + (user.getRandom().nextDouble() - 0.5D) * radius *2;
                 if (user.hasVehicle()) {
-                    user.getVehicle().teleport(g, h, j);
+                    user.getVehicle().teleport((ServerWorld) world, g, h, j, Set.of(), user.getYaw(), user.getPitch());
                     SoundEvent soundEvent = user instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
                     world.playSound((PlayerEntity)null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     user.playSound(soundEvent, 1.0F, 1.0F);
