@@ -32,7 +32,7 @@ public class GiveEffect extends TotemEffect {
     public void onDeath(LivingEntity user, World world, ItemStack stack) {
         if(user.isPlayer())
         {
-            ((PlayerEntity) user).getInventory().insertStack(item);
+            ((PlayerEntity) user).getInventory().insertStack(item.copy());
         }
     }
 

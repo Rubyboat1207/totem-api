@@ -32,7 +32,7 @@ public class TotemAPI implements ModInitializer {
 	public static final TotemEffectType RANDOM_TELEPORT_TYPE = new TotemEffectType(RandomTeleportEffect.CODEC);
 	public static final TotemEffectType FUNCTION_TYPE = new TotemEffectType(FunctionEffect.CODEC);
 
-	public static ComponentType<TotemComponent> TOTEM_COMPONENT = registerComponent("totem_component", builder -> builder.codec(TotemComponent.CODEC).packetCodec(TotemComponent.PACKET_CODEC).cache());
+	public static ComponentType<TotemComponent> TOTEM_COMPONENT;
 
 	private static <T> ComponentType<T> registerComponent(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
 		return (ComponentType)Registry.register(Registries.DATA_COMPONENT_TYPE, identifierOf(id), ((ComponentType.Builder)builderOperator.apply(ComponentType.builder())).build());
@@ -51,7 +51,10 @@ public class TotemAPI implements ModInitializer {
 		Registry.register(TotemComponent.EFFECTS, TotemAPI.identifierOf( "function"), FUNCTION_TYPE);
 
 		new TotemItem(new Item.Settings(), TotemAPI.identifierOf( "test_totem"), new ArrayList<StatusEffectInstance>(), 10, null, true);
+		TOTEM_COMPONENT = registerComponent("totem_component", builder -> builder.codec(TotemComponent.CODEC).packetCodec(TotemComponent.PACKET_CODEC).cache());
 	}
+
+
 
 	public static Identifier identifierOf(String path) {
 		return Identifier.of(MOD_ID, path);
